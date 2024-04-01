@@ -1,19 +1,26 @@
 {
-    "name": "@hexlet/code",
-    "type": "module",
-    "version": "1.0.0",
-    "description": "[![Actions Status](https://github.com/pavlovkeith/frontend-project-44/workflows/hexlet-check/badge.svg)](https://github.com/pavlovkeith/frontend-project-44/actions)",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "install": "npm install && node your-script.js"
-    },
-    "author": "pavlovkeith",
-    "license": "ISC",
-    "bin": {
-        "brain-games": "bin/brain-games.js"
-    },
-    "dependencies": {
-        "readline-sync": "^1.4.10"
-    }
+  "name": "@hexlet/code",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/pavlovkeith/frontend-project-44/workflows/hexlet-check/badge.svg)](https://github.com/pavlovkeith/frontend-project-44/actions)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm install && node your-script.js",
+    "lint": "npx eslint . --fix"
+  },
+  "author": "pavlovkeith",
+  "license": "ISC",
+  "bin": {
+    "brain-games": "bin/brain-games.js",
+    "brain-even": "bin/brain-even.js"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1"
+  }
 }
