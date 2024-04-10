@@ -1,16 +1,27 @@
 import readlineSync from 'readline-sync';
-import fs from 'fs';
 
-const games = fs
-  .readdirSync(`${__dirname}/bin/`)
-  .map((filename) => filename.slice(0, -3))
-  .filter((game) => game !== 'brain-games');
-
-export default () => {
-  console.log('\n Welcome to the Brain Games!\n');
-
-  const name = readlineSync.question('May I have your name, please? ');
-  console.log(`Nice to meet you, ${name}. Now let's play!\n`);
-
-  console.log(`Pick your game:\n${games.join('\n')}`); // TODO: add possibility of picking game right from terminal
+const roundsCount = 3;
+// Функция startGame будет запускать игру, используя переданные правила и функцию для начала раунда
+// в играх
+const startGame = (rules, startRound) => {
+  console.log('Welcome to the Brain Games!');
+  const userName = readlineSync.question('May I have your name? ');
+  console.log(`Hello, ${userName}!`);
+  console.log(rules); // Выводит правила игры, которые были переданы в функцию startGame
+  for (let i = 1; i <= roundsCount; i += 1) {
+    const [question, correctAnswer] = startRound();
+    console.log(question);
+    const userAnswer = readlineSync.question('Your answer: ');
+    if (userAnswer !== correctAnswer) {
+      console.log(
+        `'${userAnswer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`,
+      );
+      console.log(`Let's try again, ${userName}!`);
+      return;
+    }
+    console.log('Correct!');
+  }
+  console.log(`Congratulations, ${userName}!`);
 };
+
+export default startGame;

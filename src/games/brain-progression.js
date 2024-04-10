@@ -1,54 +1,44 @@
-#!/usr/bin/env node
-import readlineSync from 'readline-sync';
+import randomNumGenerator from '../randomNumGenerator.js';
+import startGame from '../index.js';
 
-const playProgressionGame = () => {
-  console.log('Welcome to the Brain Games!');
+const rule = 'What number is missing in the progression?';
 
-  const name = readlineSync.question('May I have your name? ');
-  console.log(`Hello, ${name}!`);
-
-  let score = 0;
-  const maxAttempts = 3;
-  let attempts = 0;
-
-  while (attempts < maxAttempts) {
-    const progressionLength = Math.floor(Math.random() * 6) + 5;
-    const commonDifference = Math.floor(Math.random() * 10) + 1;
-    const missingIndex = Math.floor(Math.random() * progressionLength);
-
-    const progression = [];
-    for (let i = 0; i < progressionLength; i += 1) {
-      if (i === missingIndex) {
-        progression.push('..');
-      } else {
-        progression.push(i * commonDifference + 1); // Генерация чисел прогрессии
-      }
-    }
-
-    console.log('What number is missing in the progression?');
-    console.log(`Question: ${progression.join(' ')}`);
-    const userAnswer = readlineSync.question('Your answer: ');
-    const correctAnswer = missingIndex * commonDifference + 1;
-
-    if (parseInt(userAnswer, 10) === correctAnswer) {
-      console.log('Correct!');
-      score += 1;
-    } else {
-      console.log(
-        `'${userAnswer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`,
-      );
-      console.log("Let's try again, Sam!");
-      attempts += 1;
-    }
-
-    if (score === maxAttempts) {
-      console.log(`Congratulations, ${name}!`);
-      break;
-    } else if (attempts === maxAttempts) {
-      console.log("Sorry, you've failed.");
-      break;
-    }
+const generateProgression = (start, step, length) => {
+  const progression = [start];
+  let nextNumber = start + step;
+  for (let i = 1; i < length; i += 1) {
+    progression.push(nextNumber);
+    nextNumber += step;
   }
+  return progression;
 };
 
-playProgressionGame();
+const startRound = () => {
+  const firstNumber = randomNumGenerator();
+
+  const stepSizeMax = 10;
+  const stepSizeMin = 1;
+  const stepSize = randomNumGenerator(stepSizeMax, stepSizeMin);
+
+  const maxLength = 10;
+  const minLength = 5;
+  const progressionLength = randomNumGenerator(maxLength, minLength);
+
+  const progression = generateProgression(
+    firstNumber,
+    stepSize,
+    progressionLength,
+  );
+
+  const gapIndexLimit = progressionLength - 1;
+  const gapIndex = randomNumGenerator(gapIndexLimit);
+
+  const correctAnswer = progression[gapIndex].toString();
+  progression[gapIndex] = '..';
+  const question = `Question: ${progression.join(' ')}`;
+  return [question, correctAnswer];
+};
+
+const runGame = () => startGame(rule, startRound);
+
+export default runGame;

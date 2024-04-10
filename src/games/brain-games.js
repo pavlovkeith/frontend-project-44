@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-import greetUser from '../src/cli.js';
+import welcome from '../cli.js';
 
-console.log('****Starting The Brain Games!****');
-
-greetUser();
+welcome();
